@@ -12,6 +12,8 @@ const DB = 'mongodb+srv://Tayyab19:<password>@cluster19.lzfll.mongodb.net/<Datab
 mongoose.connect(DB).then(() => console.log("Database Connected")).catch(err => console.log(err));
 
 var app = express();
+var cors = require('cors');
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
