@@ -15,5 +15,11 @@ router.get('/blogs/:id', async function(req, res, next) {
   res.json(BlogsByID);
 });
 
+// Return all blogs in database
+router.get('/deleteBlog/:id', async function(req, res, next) {
+  await blog.deleteOne({blog_id: req.params.id});
+  res.end("Deleted");
+});
+
 
 module.exports = router;
