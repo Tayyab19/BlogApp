@@ -12,13 +12,13 @@ router.get('/allBlogs/:username', async function(req, res, next) {
   res.json(BlogsWihtoutCurrUser);
 });
 
-// Return all blogs in database
+// Return all blogs of particular user in database
 router.get('/blogs/:username', async function(req, res, next) {
   const BlogsByID = await blog.find({username: req.params.username});
   res.json(BlogsByID);
 });
 
-// Return all blogs in database
+// Delete blog from database
 router.delete('/deleteBlog/:id', async function(req, res, next) {
   await blog.deleteOne({blog_id: req.params.id});
   res.end("Deleted");
