@@ -27,4 +27,16 @@ router.get("/blog/:blogID", async function (req, res, next) {
   res.json(BlogsByID);
 });
 
+//Modify a Particular Blog
+router.put("/edit/:blogID", async function (req, res, next) {
+  console.log("Put Request Data ", req.body.title);
+  res.end("Modified");
+});
+
+//Add a Particular Blog
+router.post("/add/:blogID", async function (req, res, next) {
+  console.log("Post Request Data ", req.body.title);
+  res.end("Added");
+});
+
 module.exports = router;
