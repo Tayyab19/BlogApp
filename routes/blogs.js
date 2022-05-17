@@ -29,13 +29,17 @@ router.get("/blog/:blogID", async function (req, res, next) {
 
 //Modify a Particular Blog
 router.put("/edit/:blogID", async function (req, res, next) {
-  console.log("Put Request Data ", req.body.title);
+  await blog.findOneAndUpdate({ blog_id: req.params.blogID }, req.body);
   res.end("Modified");
 });
 
-//Add a Particular Blog
-router.post("/add/:blogID", async function (req, res, next) {
-  console.log("Post Request Data ", req.body.title);
+//Add a New Blog
+router.post("/add", async function (req, res, next) {
+  const id = await blog.create(req.body);
+  const result = await blog.findOneAndUpdate(
+    { _id: id._id },
+    { blog_id: id._id }
+  );
   res.end("Added");
 });
 
