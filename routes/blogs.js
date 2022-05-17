@@ -21,4 +21,10 @@ router.delete("/deleteBlog/:id", async function (req, res, next) {
   res.end("Deleted");
 });
 
+// Return a particular Blog
+router.get("/blog/:blogID", async function (req, res, next) {
+  const BlogsByID = await blog.findOne({ blog_id: req.params.blogID });
+  res.json(BlogsByID);
+});
+
 module.exports = router;
