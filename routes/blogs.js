@@ -3,6 +3,8 @@ const { default: mongoose } = require("mongoose");
 var router = express.Router();
 const blog = require("../models/blog");
 
+const signupschema = require("../models/signup");
+
 // Return all blogs in database
 router.get("/allBlogs/:username", async function (req, res, next) {
   const allBlogs = await blog.find({});
@@ -41,6 +43,26 @@ router.post("/add", async function (req, res, next) {
     { blog_id: id._id }
   );
   res.end("Added");
+});
+
+// sign up a user
+router.post("/signup", (request, response) => {
+  const signedUpUser = new signupschema({
+    email: request.body.email,
+    username: request.body.username,
+    password: request.body.password,
+    firstname: request.body.firstname,
+    lastname: request.body.lastname,
+  });
+
+  signedUpUser
+    .save()
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((error) => {
+      response.json(error);
+    });
 });
 
 module.exports = router;
