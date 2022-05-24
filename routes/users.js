@@ -25,7 +25,7 @@ router.get("/signin", async function (req, res, next) {
 
 //Delete a User
 router.delete("/delete/:id", async function (req, res, next) {
-  await blog.deleteOne({ blog_id: req.params.id });
+  await users.deleteOne({ email: req.params.id });
   res.end("Deleted");
 });
 
