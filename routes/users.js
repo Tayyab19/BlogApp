@@ -4,10 +4,16 @@ var router = express.Router();
 const users = require("../models/user");
 
 /* GET users listing. */
-router.get("/:id/:password", async function (req, res, next) {
+router.get("/", async function (req, res, next) {
+  const currentUser = await users.find({});
+  res.json(currentUser);
+});
+
+//Sign a User In
+router.get("/signin", async function (req, res, next) {
   const currentUser = await users.findOne({
-    email: req.params.id,
-    password: req.params.password,
+    email: req.body.name,
+    password: req.body.password,
   });
 
   if (currentUser != null) {
@@ -17,29 +23,33 @@ router.get("/:id/:password", async function (req, res, next) {
   }
 });
 
-router.put(
-  "/register/:id/:password/:username",
-  async function (req, res, next) {
-    const existingemail = await users.findOne({
-      email: req.params.id,
-    });
-    const existingUsername = await users.findOne({
-      username: req.params.username,
-    });
+//Delete a User
+router.delete("/delete/:id", async function (req, res, next) {
+  await blog.deleteOne({ blog_id: req.params.id });
+  res.end("Deleted");
+});
 
-    if (existingemail != null || existingUsername != null) {
-      res.send("false");
-    } else {
-      let currentUser = {
-        email: req.params.id,
-        password: req.params.password,
-        username: req.params.username,
-      };
-      await users.create(currentUser);
+//Add a new User
+router.post("/signup", async function (req, res, next) {
+  const existingemail = await users.findOne({
+    email: req.body.email,
+  });
+  const existingUsername = await users.findOne({
+    username: req.body.username,
+  });
 
-      res.send("true");
-    }
+  if (existingemail != null || existingUsername != null) {
+    res.send("false");
+  } else {
+    let currentUser = {
+      email: req.body.email,
+      password: req.body.password,
+      username: req.body.username,
+    };
+    await users.create(currentUser);
+
+    res.send("true");
   }
-);
+});
 
 module.exports = router;
