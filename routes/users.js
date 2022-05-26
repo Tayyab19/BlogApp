@@ -10,7 +10,7 @@ router.get("/", async function (req, res, next) {
 });
 
 //Sign a User In
-router.get("/signin", async function (req, res, next) {
+router.post("/signin", async function (req, res, next) {
   const currentUser = await users.findOne({
     email: req.body.name,
     password: req.body.password,
